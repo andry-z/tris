@@ -67,6 +67,8 @@ let celle = document.querySelectorAll(".button"),
   currentPlayer = 1,
   cellIsOccupied = true;
 
+let vincitore;
+
 function checkVictory() {
   if (
     celle[0].classList.contains(sprite1) &&
@@ -75,7 +77,7 @@ function checkVictory() {
   ) {
     console.log("vince player1");
     partitaTerminata = true;
-    currentPlayer = 1;
+    vincitore = 1;
     punteggio1 = punteggio1 + 1;
   } else if (
     celle[0].classList.contains(sprite2) &&
@@ -84,7 +86,7 @@ function checkVictory() {
   ) {
     console.log("vince player2");
     partitaTerminata = true;
-    currentPlayer = 2;
+    vincitore = 2;
     punteggio2 = punteggio2 + 1;
   } else if (
     celle[3].classList.contains(sprite1) &&
@@ -93,7 +95,7 @@ function checkVictory() {
   ) {
     console.log("vince player1");
     partitaTerminata = true;
-    currentPlayer = 1;
+    vincitore = 1;
     punteggio1 = punteggio1 + 1;
   } else if (
     celle[3].classList.contains(sprite2) &&
@@ -102,7 +104,7 @@ function checkVictory() {
   ) {
     console.log("vince player2");
     partitaTerminata = true;
-    currentPlayer = 2;
+    vincitore = 2;
     punteggio2 = punteggio2 + 1;
   } else if (
     celle[6].classList.contains(sprite1) &&
@@ -111,7 +113,7 @@ function checkVictory() {
   ) {
     console.log("vince player1");
     partitaTerminata = true;
-    currentPlayer = 1;
+    vincitore = 1;
     punteggio1 = punteggio1 + 1;
   } else if (
     celle[6].classList.contains(sprite2) &&
@@ -120,7 +122,7 @@ function checkVictory() {
   ) {
     console.log("vince player2");
     partitaTerminata = true;
-    currentPlayer = 2;
+    vincitore = 2;
     punteggio2 = punteggio2 + 1;
   } else if (
     celle[0].classList.contains(sprite1) &&
@@ -129,7 +131,7 @@ function checkVictory() {
   ) {
     console.log("vince player1");
     partitaTerminata = true;
-    currentPlayer = 1;
+    vincitore = 1;
     punteggio1 = punteggio1 + 1;
   } else if (
     celle[0].classList.contains(sprite2) &&
@@ -138,7 +140,7 @@ function checkVictory() {
   ) {
     console.log("vince player2");
     partitaTerminata = true;
-    currentPlayer = 2;
+    vincitore = 2;
     punteggio2 = punteggio2 + 1;
   } else if (
     celle[2].classList.contains(sprite1) &&
@@ -147,7 +149,7 @@ function checkVictory() {
   ) {
     console.log("vince player1");
     partitaTerminata = true;
-    currentPlayer = 1;
+    vincitore = 1;
     punteggio1 = punteggio1 + 1;
   } else if (
     celle[2].classList.contains(sprite2) &&
@@ -156,7 +158,7 @@ function checkVictory() {
   ) {
     console.log("vince player2");
     partitaTerminata = true;
-    currentPlayer = 2;
+    vincitore = 2;
     punteggio2 = punteggio2 + 1;
   } else if (
     celle[0].classList.contains(sprite1) &&
@@ -165,7 +167,7 @@ function checkVictory() {
   ) {
     console.log("vince player1");
     partitaTerminata = true;
-    currentPlayer = 1;
+    vincitore = 1;
     punteggio1 = punteggio1 + 1;
   } else if (
     celle[0].classList.contains(sprite2) &&
@@ -174,7 +176,7 @@ function checkVictory() {
   ) {
     console.log("vince player2");
     partitaTerminata = true;
-    currentPlayer = 2;
+    vincitore = 2;
     punteggio2 = punteggio2 + 1;
   } else if (
     celle[1].classList.contains(sprite1) &&
@@ -183,7 +185,7 @@ function checkVictory() {
   ) {
     console.log("vince player1");
     partitaTerminata = true;
-    currentPlayer = 1;
+    vincitore = 1;
     punteggio1 = punteggio1 + 1;
   } else if (
     celle[1].classList.contains(sprite2) &&
@@ -192,7 +194,7 @@ function checkVictory() {
   ) {
     console.log("vince player2");
     partitaTerminata = true;
-    currentPlayer = 2;
+    vincitore = 2;
     punteggio2 = punteggio2 + 1;
   } else if (
     celle[2].classList.contains(sprite1) &&
@@ -201,7 +203,7 @@ function checkVictory() {
   ) {
     console.log("vince player1");
     partitaTerminata = true;
-    currentPlayer = 1;
+    vincitore = 1;
     punteggio1 = punteggio1 + 1;
   } else if (
     celle[2].classList.contains(sprite2) &&
@@ -210,39 +212,53 @@ function checkVictory() {
   ) {
     console.log("vince player2");
     partitaTerminata = true;
-    currentPlayer = 2;
+    vincitore = 2;
     punteggio2 = punteggio2 + 1;
   }
   punteggio1html.innerHTML = punteggio1;
   punteggio2html.innerHTML = punteggio2;
+  currentPlayer++;
+  celleOccupate = celleOccupate + 1;
+  if (celleOccupate == 9) {
+    result_display.innerHTML = "Pareggio";
+  }
+  if (partitaTerminata === true) {
+    result_display.innerHTML = "Il vincitore è giocatore " + vincitore;
+    trophy.classList.add("nes-icon");
+    trophy.classList.add("trophy");
+    trophy.classList.add("is-large");
+  }
 }
+
+let grid = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
+
+let lastMove = null;
 
 for (let i = 0; i < celle.length; i++) {
   let link = celle[i];
   link.addEventListener("click", function (e) {
     e.preventDefault();
+    casella = e.currentTarget;
     cellIsOccupied =
       e.currentTarget.classList.contains(sprite2) ||
       e.currentTarget.classList.contains(sprite1);
     console.log(cellIsOccupied);
     if (!cellIsOccupied && partitaTerminata === false) {
-      if (currentPlayer % 2 == 0) {
-        e.currentTarget.classList.toggle(sprite2);
-      } else {
-        e.currentTarget.classList.toggle(sprite1);
-      }
-      currentPlayer++;
-      celleOccupate = celleOccupate + 1;
-      if (celleOccupate == 9) {
-        result_display.innerHTML = "Pareggio";
-      }
+      e.currentTarget.classList.toggle(sprite1);
+      grid[casella.dataset.row][casella.dataset.col] = "X";
+      lastMove = "X";
       checkVictory();
-    }
-    if (partitaTerminata === true) {
-      result_display.innerHTML = "Il vincitore è giocatore " + currentPlayer;
-      trophy.classList.add("nes-icon");
-      trophy.classList.add("trophy");
-      trophy.classList.add("is-large");
+      if (lastMove === "X" && partitaTerminata === false) {
+        setTimeout(function () {
+          getBestMove(grid);
+        }, 500);
+        lastMove = "O";
+        setTimeout(checkVictory, 501);
+      }
     }
   });
 }
@@ -255,16 +271,15 @@ function reset() {
   result_display.innerHTML = "";
   partitaTerminata = false;
   celleOccupate = 0;
+  grid = [
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+  ];
   trophy.classList.remove("nes-icon");
   trophy.classList.remove("trophy");
   trophy.classList.remove("is-large");
 }
-
-let grid = [
-  [null, null, null],
-  [null, null, null],
-  [null, null, null],
-];
 
 function getEmptyCells(board) {
   let emptyCells = [];
@@ -278,9 +293,13 @@ function getEmptyCells(board) {
   return emptyCells;
 }
 
-function getCell(board, player) {
+function getBestMove(board) {
   let emptyCells = getEmptyCells(board);
   let randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-  board[randomCell[0]][randomCell[1]] = player;
-  return board;
+  board[randomCell[0]][randomCell[1]] = "O";
+  let box = document.querySelector(
+    '[data-row="' + randomCell[0] + '"][data-col="' + randomCell[1] + '"]'
+  );
+  box.classList.toggle(sprite2);
+  return randomCell;
 }
