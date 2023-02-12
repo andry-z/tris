@@ -11,16 +11,42 @@ a {
   color: white;
 }
 
-.container {
+.content {
   display: flex;
   flex-direction: column;
   width: 100vw;
   height: 100vh;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 50vh;
+  width: 100vw;
 }
 
 .button {
   box-shadow: rgba(0, 0, 0, 0.55) 0px 10px 15px;
   margin: 3vh;
+  height: 5vh;
+  font-size: 1.5em;
+}
+
+.title {
+  width: 85vw;
+  text-align: center;
+  font-size: 2.5em;
+}
+
+@media only screen and (max-width: 600px) {
+  .title {
+    font-size: 1.5em;
+  }
+  .button {
+    height: 5.5vh;
+    font-size: 1em;
+  }
 }
